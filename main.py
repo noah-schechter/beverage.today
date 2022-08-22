@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 app = FastAPI()
-
+import uvicorn
 from pyairtable import Table
-from pyairtable.formulas import match
 
 import os 
 from dotenv import load_dotenv
@@ -31,16 +30,27 @@ def fetchInventory():
         inventory[typeDrink].append(ingredient)
     return inventory
 
+
+
 def fetchRecipes():
     records = recipes_table.all()
     recipes = {}
     for row in records:
         fields = row['fields']
         drink = fields['Drink']
-        ingredients = fields['Ingredients']
-        if drink not in recipes:
-            recipes[drink] = []
-        recipes[drink] = ingredients
+        inStock = fields['STOCKED']
+        if inStock == 1:
+            ingredientsRaw = fields['Ingredients (from Types)']
+            ingredientsProcessed = []
+            for ingredientRaw in ingredientsRaw:
+                ingredientProcessed = Table.get(inventory_table, ingredientRaw)
+                ingredientsProcessed.append(ingredientProcessed['fields']['Product'])
+            if 'Specific Ingredients text' in fields:
+                specialsRaw = fields['Specific Ingredients text']
+                specialsRaw = specialsRaw.split(',')
+                for specialRaw in specialsRaw:
+                    ingredientsProcessed.append(specialRaw.strip())
+            recipes[drink] = ingredientsProcessed
     return recipes
 
 """
@@ -68,7 +78,4 @@ def constructMenu(recipes, inventory):
 
 @app.get("/")
 def read_root():
-    inventory = fetchInventory()
-    recipes = fetchRecipes()
-    return constructMenu(recipes, inventory)
-    print(menu)
+    return fetchRecipes()
