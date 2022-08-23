@@ -6,23 +6,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/static/output.css" rel="stylesheet"> 
     </head>
-    <body>
-        <div class="p-4 text-center text-6xl">
-            <span class="font-gothic">THE BAR</span>
-            <span class="font-yellowtail">at Kenmore</span>
-        </div>
-        <div id="menu" class="pt-8 text-center text-3xl">
-            {% for drink in menu %}
-            <div class="p-4" id="{{drink}}">
-                <p class="font-gothic">
-                    {{drink.upper()}}
-                </p>
+    <body class="bg-[#d0dbd4]"">
+        <div class="md:grid md:grid-cols-5">
+        <div class="md:col-start-2 md:col-end-5 h-screen">
+            <div class="p-4 text-center text-5xl md:text-6xl">
+                <span class="font-gothic">THE BAR</span>
+                <span class="font-yellowtail">at Kenmore</span>
                 <p class="text-xl">
-                    {{menu[drink]}}
+                    {{time}}
                 </p>
             </div>
-            {% endfor %}
+            <div id="menu" class="pt-8 text-center text-3xl">
+                {% for drink in menu %}
+                <div class="p-4" id="{{drink}}">
+                    <p class="font-gothic">
+                        {{drink.upper()}}
+                    </p>
+                    <p class="text-xl">
+                        {{menu[drink]}}
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+            <footer class="sticky top-[100vh] p-1 pt-6 text-xs">
+                <div class="justify-center text-center">
+                    <span class="">Built by </span>
+                    <span class=""><a href="https://aidan.global">Aidan</a> and <a href="https://noah.garden">Noah</a>.</span>
+                </div>
+            </footer>
         </div>
-       
+        </div>
     </body>
-    </html>
+</html>
