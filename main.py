@@ -4,7 +4,7 @@ from pathlib import Path
 app = FastAPI()
 app.mount(
     "/static",
-    StaticFiles(directory=Path(__file__).parent.absolute() / "static"),
+    StaticFiles(directory="static"),
     name="static",
 )
 import uvicorn
