@@ -1,3 +1,4 @@
+#Initialize FASTAPI
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
@@ -5,11 +6,11 @@ app = FastAPI()
 app.mount(
     "/static",
     StaticFiles(directory="static"),
-    name="static",
-)
+    name="static",)
 import uvicorn
-from pyairtable import Table
 
+
+#Set Up API Key Security
 import os 
 from dotenv import load_dotenv
 
@@ -20,6 +21,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 #Set Up Airtable stuff
+from pyairtable import Table
 base_key = 'appTHjcO6A2sfezsV'
 load_dotenv()
 api_key = os.environ.get('API_KEY')
@@ -28,8 +30,22 @@ inventory_table = Table(api_key, base_key, table_1_name)
 table_2_name = 'tblcgPnwDpkj6x36D'
 recipes_table = Table(api_key, base_key, table_2_name)
 
+#Initialize Time
+from datetime import time, timedelta
+import datetime
+
+def getTime():
+    dateTime = str(datetime.datetime.utcnow())
+    hour = int(dateTime[11:13])
+    if hour < 7:
+        return str(datetime.date.today() - timedelta(days=1))
+    dateTime = str(datetime.date.today())
+    new = dateTime[5:7] +u"\u2022" + dateTime[8:10] + 	u"\u2022" + dateTime[0:4]
+    return new
+
+
 """
-Accessed Airtable and returns dict of in-stock drinks and specific ingredients.
+Accesses Airtable and returns dict of in-stock drinks and specific ingredients.
 """
 def fetchRecipes():
     records = recipes_table.all()
@@ -57,4 +73,5 @@ def fetchRecipes():
 @app.get("/")
 def read_root(request:Request):
     menu = fetchRecipes()
-    return templates.TemplateResponse("home.html", {"request": menu, "menu":menu})
+    dateTime = getTime()
+    return templates.TemplateResponse("home.html", {"request": menu, "menu":menu, "time":dateTime})
