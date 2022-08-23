@@ -652,6 +652,11 @@ video {
   line-height: 1.25rem;
 }
 
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
 @font-face {
   font-family: "YELLOWTAIL";
 

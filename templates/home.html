@@ -7,8 +7,6 @@
         <link href="/static/output.css" rel="stylesheet"> 
     </head>
     <body class="bg-[#d0dbd4]"">
-        <div class="md:grid md:grid-cols-5">
-        <div class="md:col-start-2 md:col-end-5 h-screen">
             <div class="p-4 text-center text-5xl md:text-6xl">
                 <span class="font-gothic">THE BAR</span>
                 <span class="font-yellowtail">at Kenmore</span>
@@ -16,6 +14,8 @@
                     {{time}}
                 </p>
             </div>
+        <div class="md:grid md:grid-cols-5">
+        <div class="md:col-start-2 md:col-end-5 h-screen">
             <div id="menu" class="pt-8 text-center text-3xl">
                 {% for drink in menu %}
                 <div class="p-4" id="{{drink}}">
