@@ -1,10 +1,23 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 app = FastAPI()
+app.mount(
+    "/static",
+    StaticFiles(directory=Path(__file__).parent.absolute() / "static"),
+    name="static",
+)
 import uvicorn
 from pyairtable import Table
 
 import os 
 from dotenv import load_dotenv
+
+#Set up Templates
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+templates = Jinja2Templates(directory="templates")
+
 
 #Set Up Airtable stuff
 base_key = 'appTHjcO6A2sfezsV'
@@ -27,19 +40,21 @@ def fetchRecipes():
         inStock = fields['STOCKED']
         if inStock == 1:
             ingredientsRaw = fields['Ingredients (from Types)']
-            ingredientsProcessed = []
+            ingredientsProcessed = ""
             for ingredientRaw in ingredientsRaw:
                 ingredientProcessed = Table.get(inventory_table, ingredientRaw)
-                ingredientsProcessed.append(ingredientProcessed['fields']['Product'])
+                ingredientsProcessed = ingredientsProcessed + (ingredientProcessed['fields']['Product']) + ", "
             if 'Specific Ingredients text' in fields:
                 specialsRaw = fields['Specific Ingredients text']
                 specialsRaw = specialsRaw.split(',')
                 for specialRaw in specialsRaw:
-                    ingredientsProcessed.append(specialRaw.strip())
-            recipes[drink] = ingredientsProcessed
+                    ingredientsProcessed = ingredientsProcessed + (specialRaw.strip()) + ", "
+            length = len(ingredientsProcessed)
+            recipes[drink] = ingredientsProcessed[:length - 2].lower()
     return recipes
 
 
 @app.get("/")
-def read_root():
-    return fetchRecipes()
+def read_root(request:Request):
+    menu = fetchRecipes()
+    return templates.TemplateResponse("home.html", {"request": menu, "menu":menu})

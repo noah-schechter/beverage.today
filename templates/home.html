@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Bar@Kenmore</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/static/output.css" rel="stylesheet"> 
+    </head>
+    <body>
+        <div class="p-4 text-center text-6xl">
+            <span class="font-gothic">THE BAR</span>
+            <span class="font-yellowtail">at Kenmore</span>
+        </div>
+        <div id="menu" class="pt-8 text-center text-3xl">
+            {% for drink in menu %}
+            <div class="p-4" id="{{drink}}">
+                <p class="font-gothic">
+                    {{drink.upper()}}
+                </p>
+                <p class="text-xl">
+                    {{menu[drink]}}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+       
+    </body>
+    </html>
