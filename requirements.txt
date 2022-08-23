@@ -4,3 +4,5 @@ pyairtable==1.0.0.post1
 python-dotenv==0.20.0
 starlette==0.19.1
 uvicorn==0.18.2
+jinja2
+pathlib

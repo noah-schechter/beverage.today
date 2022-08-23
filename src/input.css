@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "YELLOWTAIL";
+    src: url("../static/fonts/Yellowtail-Regular.otf");
+  }
+
+@font-face {
+    font-family: "LEAGUEGOTHIC";
+    src: url("../static/fonts/LeagueGothic-Regular.otf");
+  }
