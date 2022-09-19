@@ -1,3 +1,6 @@
+#Use the following to run locally: uvicorn main:app --host 0.0.0.0 --port 80
+
+
 #Initialize FASTAPI
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -13,6 +16,7 @@ import uvicorn
 #Set Up API Key Security
 import os 
 from dotenv import load_dotenv
+
 
 #Set up Templates
 from fastapi.templating import Jinja2Templates
@@ -30,9 +34,11 @@ inventory_table = Table(api_key, base_key, table_1_name)
 table_2_name = 'tblcgPnwDpkj6x36D'
 recipes_table = Table(api_key, base_key, table_2_name)
 
+
 #Initialize Time
 from datetime import time, timedelta
 import datetime
+
 
 def getTime():
     dateTime = str(datetime.datetime.utcnow())
@@ -57,8 +63,10 @@ def fetchRecipes():
         if inStock == 1 and 'IngredientsText' in fields:         #Only continue if all of the drink's ingredients are in stock
             ingredientsRaw = fields['IngredientsText'].strip()   #Fetch a string containing comma-separated ingredient names
             if 'GarnishesText' in fields:                        #Check if there are any garnishes
-                garnishes = fields['GarnishesText']              #Get garnishes
-                ingredientsRaw = ingredientsRaw + ", " + (garnishes.strip())    #Add garnishes to ingredients
+                garnishes = fields['GarnishesText']   
+                garnish = garnishes[0]
+                #for garnish in garnishes:                            #Change this logic to just select one garnish or display multiple
+                ingredientsRaw = ingredientsRaw + ", " + garnish  
             recipes[drink] = (ingredientsRaw).lower()            #Add a lowercased version of the ingredient list as the value to the drink key in the recipes dict
     return recipes
 
