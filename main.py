@@ -54,19 +54,12 @@ def fetchRecipes():
         fields = row['fields']
         drink = fields['Drink']
         inStock = fields['STOCKED']
-        if inStock == 1:
-            ingredientsRaw = fields['Ingredients (from Types)']
-            ingredientsProcessed = ""
-            for ingredientRaw in ingredientsRaw:
-                ingredientProcessed = Table.get(inventory_table, ingredientRaw)
-                ingredientsProcessed = ingredientsProcessed + (ingredientProcessed['fields']['Product']) + ", "
-            if 'Specific Ingredients text' in fields:
-                specialsRaw = fields['Specific Ingredients text']
-                specialsRaw = specialsRaw.split(',')
-                for specialRaw in specialsRaw:
-                    ingredientsProcessed = ingredientsProcessed + (specialRaw.strip()) + ", "
-            length = len(ingredientsProcessed)
-            recipes[drink] = ingredientsProcessed[:length - 2].lower()
+        if inStock == 1 and 'IngredientsText' in fields:         #Only continue if all of the drink's ingredients are in stock
+            ingredientsRaw = fields['IngredientsText'].strip()   #Fetch a string containing comma-separated ingredient names
+            if 'GarnishesText' in fields:                        #Check if there are any garnishes
+                garnishes = fields['GarnishesText']              #Get garnishes
+                ingredientsRaw = ingredientsRaw + ", " + (garnishes.strip())    #Add garnishes to ingredients
+            recipes[drink] = (ingredientsRaw).lower()            #Add a lowercased version of the ingredient list as the value to the drink key in the recipes dict
     return recipes
 
 
