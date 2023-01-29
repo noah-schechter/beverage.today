@@ -42,7 +42,7 @@ import datetime
 
 def getTime():
     dateTime = str(datetime.date.today())
-    return dateTime[5:7] +u"\u2022" + dateTime[8:10] + 	u"\u2022" + dateTime[0:4]
+    return dateTime[5:7] + u"\u2022" + dateTime[8:10] + u"\u2022" + dateTime[0:4]
 
 
 """
@@ -69,9 +69,9 @@ def fetchRecipes():
 @app.get("/")
 def read_root(request:Request):
     menu = fetchRecipes()
-    print(menu)
     dateTime = getTime()
     return templates.TemplateResponse("home.html", {"request": menu, "menu":menu, "time":dateTime})
+
 
 @app.get("/api")
 def gen_api(request:Request):
