@@ -47,7 +47,7 @@ def getTime():
     dateTime = datetime.datetime.now(place)
     dateTime = str(dateTime)[0:10]
     print(dateTime)
-    return str(dateTime[5:7] + '//' + dateTime[8:10] + '//' + dateTime[0:4])
+    return str(dateTime[5:7] + '.' + dateTime[8:10] + '.' + dateTime[0:4])
 
 # u'\u2022'
 """
