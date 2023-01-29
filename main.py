@@ -42,7 +42,7 @@ import datetime
 
 def getTime():
     dateTime = str(datetime.date.today())
-    return dateTime[5:7] + u"\u2022" + dateTime[8:10] + u"\u2022" + dateTime[0:4]
+    return str(dateTime[5:7] + u"\u2022" + dateTime[8:10] + u"\u2022" + dateTime[0:4])
 
 
 """
