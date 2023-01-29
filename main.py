@@ -38,10 +38,14 @@ recipes_table = Table(api_key, base_key, table_2_name)
 #Initialize Time
 from datetime import time, timedelta
 import datetime
+import pytz
 
 
 def getTime():
-    dateTime = str(datetime.date.today())
+    #dateTime = str(datetime.date.today())
+    place = pytz.timezone('America/Los_Angeles')
+    dateTime = datetime.datetime.now(place)
+    dateTime = str(dateTime)[0:10]
     return str(dateTime[5:7] + u"\u2022" + dateTime[8:10] + u"\u2022" + dateTime[0:4])
 
 
