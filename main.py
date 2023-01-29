@@ -41,13 +41,8 @@ import datetime
 
 
 def getTime():
-    dateTime = str(datetime.datetime.utcnow())
-    hour = int(dateTime[11:13])
-    if hour < 7:
-        return str(datetime.date.today() - timedelta(days=1))
     dateTime = str(datetime.date.today())
-    new = dateTime[5:7] +u"\u2022" + dateTime[8:10] + 	u"\u2022" + dateTime[0:4]
-    return new
+    return dateTime[5:7] + u"\u2022" + dateTime[8:10] + u"\u2022" + dateTime[0:4]
 
 
 """
@@ -76,6 +71,7 @@ def read_root(request:Request):
     menu = fetchRecipes()
     dateTime = getTime()
     return templates.TemplateResponse("home.html", {"request": menu, "menu":menu, "time":dateTime})
+
 
 @app.get("/api")
 def gen_api(request:Request):
