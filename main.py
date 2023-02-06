@@ -1,6 +1,5 @@
 #Use the following to run locally: uvicorn main:app --host 0.0.0.0 --port 80
 
-
 #Initialize FASTAPI
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
