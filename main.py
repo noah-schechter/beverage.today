@@ -28,10 +28,10 @@ templates = Jinja2Templates(directory="templates")
 from pyairtable import Table
 base_key = 'appTHjcO6A2sfezsV'
 load_dotenv()
-api_key = os.environ.get('API_KEY')
-table_1_name = 'tbl85euKMNpg1Fn0O'
+api_key = os.environ.get('API_TOKEN')
+table_1_name = os.environ.get('table_1_name')
 inventory_table = Table(api_key, base_key, table_1_name)
-table_2_name = 'tblcgPnwDpkj6x36D'
+table_2_name = os.environ.get('table_2_name')
 recipes_table = Table(api_key, base_key, table_2_name)
 
 
